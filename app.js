@@ -16,12 +16,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-
-
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -30,7 +27,6 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const dbUrl = process.env.ATLASDB_URL
 
 main().then(()=>{
@@ -43,7 +39,6 @@ main().then(()=>{
 async function main(){
     await mongoose.connect(dbUrl);
 }
-
 
 const store = MongoStore.create({
     mongoUrl:dbUrl,
@@ -69,23 +64,15 @@ const sessionOptions = {
     } 
 };
 
-// app.get("/",(req,res)=>{
-//     res.send("Hi!,I am Root");
-// });
-
 app.use(session(sessionOptions));
 app.use(flash());
-
-
 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
 
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
@@ -94,11 +81,9 @@ app.use((req,res,next)=>{
     next();
 });
 
-
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
-
 
 // Catch-all route for 404 errors
 app.all("*", (req, res, next) => {
@@ -114,3 +99,4 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
     console.log("Server is listening to port 8080");
 });
+
