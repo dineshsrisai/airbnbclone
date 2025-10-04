@@ -114,29 +114,3 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
     console.log("Server is listening to port 8080");
 });
-
-
-// app.get("/testListing",async (req,res)=>{
-//     let sampleListing = new Listing({
-//         title:"My New Villa",
-//         description : "By the Beach",
-//         price:1200,
-//         location:"Calangute, Goa",
-//         country:"India",
-//     });
-    
-//     await sampleListing.save();
-//     console.log("sample was saved");
-//     res.send("Successful testing");
-// });
-
-
-// app.get("/demouser",async (req,res)=>{
-//     let fakeUser = new User({
-//         email : "student@gmail.com",
-//         username : "delta-student",
-//     });
-
-//     let registeredUser = await User.register(fakeUser,"helloworld");
-//     res.send(registeredUser);
-// });
